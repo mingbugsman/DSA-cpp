@@ -80,16 +80,20 @@ public:
 };
 
 int main() {
-    HamiltonianCycle g(5);
-
-    // Thêm các cạnh
-    g.addEdge(0, 1);
-    g.addEdge(0, 3);
-    g.addEdge(1, 2);
-    g.addEdge(1, 3);
-    g.addEdge(1, 4);
-    g.addEdge(2, 4);
-    g.addEdge(3, 4);
+    cout << "Nhap so dinh : ";
+    int n; cin >> n;
+    HamiltonianCycle g(n);
+    
+    while (true) {
+        int x,y;
+        cin >> x; cin >> y;
+        
+        if (x == -1 && y == -1) { //điều kiện dừng nhập input
+            break;
+        }
+        g.addEdge(x,y);
+    }
+    
     g.print();
     g.findHamiltonianCycle();
 
