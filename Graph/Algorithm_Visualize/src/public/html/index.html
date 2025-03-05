@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.30.4/cytoscape.min.js" integrity="sha512-xpXUCbrkyJCwC5noJXZqec9rSXdRgFfDoL7Q9/pCPe54Y04OlqwPobMcNuA5NPJ7DRR51OIr6xcOH2wUspyKDQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div id="cy">
+            <img src="/static/images/cirno_pixel.gif" id="cirno" style="width: 10%;"/>
+        </div>
+        <div class="container_operator">
+            <button id="reset-btn">Reset Graph</button>
+            <br>
+            <input type="text" id="node-input" placeholder="Enter new node">
+            <button id="add-node-btn">Add Node</button>
+            <br>
+            <input type="text" id="source-input" placeholder="Source node">
+            <input type="text" id="target-input" placeholder="Target node">
+            <input type="number" id="weight-input" value="0" placeholder="Trọng số">
+            <button id="add-edge-btn">Add Edge</button>
+            <br>
+            <input type="text" id="node-start" placeholder="nhập node bắt đầu">
+            <button id="bfs-btn">Chạy BFS</button>
+            <button id="dfs-btn">Chạy DFS</button>
+            <button id="reset-algorithm">reset algorithm</button>
+        
+            <h3>DFS Order:</h3>
+            <ul id="dfs-output"></ul>
+        </div>
+    </div>
+
+
+
+    <script src="/static/js/script.js"></script>
+    <script src="/static/js/bfs_dfs.js"></script>
+</body>
+</html>

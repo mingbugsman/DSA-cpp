@@ -3,3 +3,6 @@
 
 # Loại bỏ tất cả các file .exe
 *.exe
+
+
+node_modules

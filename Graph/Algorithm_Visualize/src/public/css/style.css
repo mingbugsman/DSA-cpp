@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    justify-content: space-evenly;
+
+}
+.container_operator {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+#cy {
+    width: 50vh;
+    height: 50vh;
+    display: block;
+    border: 1px solid;
+    border-radius: 5px;
+    position: relative;
+}
+
+#cirno {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
