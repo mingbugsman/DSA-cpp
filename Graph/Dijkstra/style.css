@@ -1,0 +1,46 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#grid-container {
+    position: relative;
+    line-height: 0;
+}
+
+#cirno {
+    position: absolute;
+    top: 0;
+    right: 10px;
+}
+
+.grid-cell {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    display: inline-block;
+}
+
+.obstacle {
+    background-color: black;
+}
+
+.start {
+    background-color: green;
+}
+
+.end {
+    background-color: red;
+}
+
+.path {
+    background-color: yellow;
+    transition: background-color 0.3s ease;
+}
+
+.scanned {
+    background-color: lightblue; /* Màu xanh nhạt khi quét */
+    transition: background-color 0.3s;
+}
