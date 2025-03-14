@@ -307,6 +307,12 @@ public:
             cout << "Enter option : ";
             int option;
             cin >> option;
+            if (cin.fail()) {
+                cout << "Loi: Vui long nhap so nguyen!\n";
+                cin.clear();  // Xóa trạng thái lỗi
+                cin.ignore(10000, '\n');  // Xóa dữ liệu sai trong bộ đệm
+                continue;
+            }
             switch (option)
             {
             case 0:
@@ -341,6 +347,8 @@ public:
                 break;
             case -1:
                 return;
+            default:
+                cout << "Lua chon khong hop le. Vui long nhap lai!\n";
             }
         }
     }
@@ -514,6 +522,12 @@ class Bai2 {
                 displayBai2();
                 cout << "Enter option : ";
                 int option; cin >> option;
+                if (cin.fail()) {
+                    cout << "Loi: Vui long nhap so nguyen!\n";
+                    cin.clear();  // Xóa trạng thái lỗi
+                    cin.ignore(10000, '\n');  // Xóa dữ liệu sai trong bộ đệm
+                    continue;
+                }
                 switch (option)
                 {
                 case 1:                    
@@ -538,6 +552,8 @@ class Bai2 {
                     break;
                 case -1:
                     return;
+                default:
+                    cout << "Lua chon khong hop le. Vui long nhap lai!\n";
                 }
             }
             
@@ -548,8 +564,8 @@ class Bai2 {
 void displayLab3() {
     cout << "======================================\n";
     cout << "Danh sach tap tuan 3\n";
-    cout << "Bai 1.\n";
-    cout << "Bai 2.\n";
+    cout << "1. Bai 1.\n";
+    cout << "2. Bai 2.\n";
     cout << "Thoat chuong trinh\n";
     cout << "======================================\n\n";
 }
@@ -571,6 +587,12 @@ int main()
     {
         displayLab3();
         cout << "Enter option : "; int option; cin >> option;
+        if (cin.fail()) {
+            cout << "Loi: Vui long nhap so nguyen!\n";
+            cin.clear();  // Xóa trạng thái lỗi
+            cin.ignore(10000, '\n');  // Xóa dữ liệu sai trong bộ đệm
+            continue;
+        }
         switch (option)
         {
         case 1:
@@ -582,7 +604,10 @@ int main()
             bai2.execBai2();
             break;
         case 0:
+            cout << "Thoat chuong trinh !!!";
             return 0;
+        default:
+            cout << "Lua chon khong hop le. Vui long nhap lai!\n";
         }
     }
     
