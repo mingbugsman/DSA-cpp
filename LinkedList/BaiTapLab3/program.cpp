@@ -593,7 +593,7 @@ int main()
             cin.ignore(10000, '\n');  // Xóa dữ liệu sai trong bộ đệm
             continue;
         }
-        switch (option)
+        switch (option) 
         {
         case 1:
             cout << "Kiem thu bai 1.\n";
