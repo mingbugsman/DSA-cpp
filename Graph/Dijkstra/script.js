@@ -1,19 +1,54 @@
-class PriorityQueue {
+class MinHeap {
     constructor() {
-        this.queue = [];
+        this.heap = [];
     }
 
     enqueue(node, priority) {
-        this.queue.push({ node, priority });
-        this.queue.sort((a, b) => a.priority - b.priority);
+        this.heap.push({ node, priority });
+        this.bubbleUp(this.heap.length - 1);
     }
 
     dequeue() {
-        return this.queue.shift().node;
+        if (this.heap.length === 0) return null;
+        if (this.heap.length === 1) return this.heap.pop().node;
+
+        const min = this.heap[0];
+        this.heap[0] = this.heap.pop();
+        this.bubbleDown(0);
+        return min.node;
+    }
+
+    bubbleUp(index) {
+        while (index > 0) {
+            const parent = Math.floor((index - 1) / 2);
+            if (this.heap[parent].priority <= this.heap[index].priority) break;
+            [this.heap[parent], this.heap[index]] = [this.heap[index], this.heap[parent]];
+            index = parent;
+        }
+    }
+
+    bubbleDown(index) {
+        const length = this.heap.length;
+        while (true) {
+            let smallest = index;
+            const left = 2 * index + 1;
+            const right = 2 * index + 2;
+
+            if (left < length && this.heap[left].priority < this.heap[smallest].priority) {
+                smallest = left;
+            }
+            if (right < length && this.heap[right].priority < this.heap[smallest].priority) {
+                smallest = right;
+            }
+            if (smallest === index) break;
+
+            [this.heap[index], this.heap[smallest]] = [this.heap[smallest], this.heap[index]];
+            index = smallest;
+        }
     }
 
     isEmpty() {
-        return this.queue.length === 0;
+        return this.heap.length === 0;
     }
 }
 
@@ -122,15 +157,16 @@ async function dijkstraVisualization(grid) {
     }
 
     start.distance = 0;
-    const pq = new PriorityQueue();
+    const pq = new MinHeap();
     pq.enqueue(start, 0);
     const visited = new Set();
     const scannedNodes = [];
 
     while (!pq.isEmpty()) {
         const current = pq.dequeue();
-        if (visited.has(`${current.x},${current.y}`)) continue;
-        visited.add(`${current.x},${current.y}`);
+        const key = `${current.x},${current.y}`;
+        if (visited.has(key)) continue;
+        visited.add(key);
 
         if (current === end) break;
 
@@ -140,9 +176,10 @@ async function dijkstraVisualization(grid) {
 
         const neighbors = getNeighbors(grid, current);
         for (const neighbor of neighbors) {
-            if (visited.has(`${neighbor.x},${neighbor.y}`)) continue;
+            const neighborKey = `${neighbor.x},${neighbor.y}`;
+            if (visited.has(neighborKey)) continue;
 
-            const newDistance = current.distance + 1;
+            const newDistance = current.distance + 1; // Trọng số đồng đều
             if (newDistance < neighbor.distance) {
                 neighbor.distance = newDistance;
                 neighbor.previous = current;
