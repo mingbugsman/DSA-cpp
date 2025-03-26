@@ -2,17 +2,49 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Dijkstra Grid Simulation</title>
+    <title>Dijkstra's algorithm visualization</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="grid-container"></div>
-    <div  id="cirno">
-        <p>Hello ae</p>
-        <img src="/cirno_pixel.gif" width="50px" height="50px">
+
+    <div class="container">
+        <nav>
+            <div class="Title-Web">
+                <h2>Dijkstra's algorithm</h2>
+            </div>
+            <div class="nav-information">
+                <p class="information"><u>Nhóm phụ trách đề tài: 3</u></p>
+                <p class="information"><u>Gv hướng dẫn: Ths. Lê Tuấn Thu</u></p>
+            </div>
+        </nav>
+        <div class="grid-container-wrapper">
+            <div  id="cirno">
+                <p>Em chào thầy</p>
+                <img src="cirno_pixel.gif" width="100px" height="100px">
+                    <div>
+                        <p id="announce">Thông báo thuật toán sẽ xuất hiện tại đây</p>
+                        <div class="arrow arrow-left">⬆</div>
+                        <div class="arrow arrow-middle">⬆</div>
+                        <div class="arrow arrow-right">⬆</div>
+                    </div>
+                    
+                </div>
+            <div id="grid-container">
+                <div id="operations">
+                    <button class="operation" id="random-obstacles">Thêm ngẫu nhiên vật cản</button>
+                    <button class="operation" onclick="runDijkstra()">Chạy thuật toán</button>
+                    <button  class="operation" onclick="resetGrid()">Reset</button>
+                </div>
+            </div>
+            <div class="information-student">
+                <h1>Sinh viên thực hiện mô phỏng</h1>
+                <p>Họ và tên: <span>Trần Tuấn Minh</span></p>
+                <p>Lớp: 12_ĐH_CNTT3</p>
+                <p>mssv: 1250080116</p>
+                <p>Source code: <a href="https://github.com/mingbugsman/DSA-cpp/tree/master/Graph/Dijkstra">Here</a></p>
+            </div>
+        </div>
     </div>
-    <button onclick="runDijkstra()">Chạy thuật toán</button>
-    <button onclick="resetGrid()">Reset</button>
     <script  src="./script.js"></script>
 
 </body>

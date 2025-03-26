@@ -54,14 +54,16 @@ class MinHeap {
 
 
 
-const gridSize = 10; // Lưới 10x10
+const gridSize = [25,50]; // Lưới 10x10
 const grid = [];
 const container = document.getElementById('grid-container');
+const annouce = document.getElementById("announce");
+const arrows = document.querySelectorAll(".arrow")
 
 // Tạo lưới ô
-for (let i = 0; i < gridSize; i++) {
+for (let i = 0; i < gridSize[0]; i++) {
     grid[i] = [];
-    for (let j = 0; j < gridSize; j++) {
+    for (let j = 0; j < gridSize[1]; j++) {
         grid[i][j] = {
             x: i,
             y: j,
@@ -107,8 +109,8 @@ container.addEventListener('click', function(event) {
     }
 });
 function resetGrid() {
-    for (let i = 0; i < gridSize; i++) {
-        for (let j = 0; j < gridSize; j++) {
+    for (let i = 0; i < gridSize[0]; i++) {
+        for (let j = 0; j < gridSize[1]; j++) {
             grid[i][j].isObstacle = false;
             grid[i][j].isStart = false;
             grid[i][j].isEnd = false;
@@ -120,19 +122,22 @@ function resetGrid() {
     }
     settingStart = true;
     settingEnd = false;
+
+    annouce.textContent = "Thông báo thuật toán sẽ xuất hiện tại đây"
+    annouce.classList.remove("blinking-border");
+    arrows.forEach(arrow => arrow.style.display ="none");
 }
 
 function getNeighbors(grid, node) {
     const neighbors = [];
     const directions = [
-        [-1, 0], [1, 0], [0, -1], [0, 1], // Lên, Xuống, Trái, Phải
-        [-1, -1], [-1, 1], [1, -1], [1, 1] // Chéo trái trên, chéo phải trên, chéo trái dưới, chéo phải dưới
+        [-1, 0], [1, 0], [0, -1], [0, 1] // Lên, Xuống, Trái, Phải
     ];
     
     for (let [dx, dy] of directions) {
         const newX = node.x + dx;
         const newY = node.y + dy;
-        if (newX >= 0 && newX < gridSize && newY >= 0 && newY < gridSize && !grid[newX][newY].isObstacle) {
+        if (newX >= 0 && newX < gridSize[0] && newY >= 0 && newY < gridSize[1] && !grid[newX][newY].isObstacle) {
             neighbors.push(grid[newX][newY]);
         }
     }
@@ -141,8 +146,8 @@ function getNeighbors(grid, node) {
 
 function findStartEnd(grid) {
     let start = null, end = null;
-    for (let i = 0; i < gridSize; i++) {
-        for (let j = 0; j < gridSize; j++) {
+    for (let i = 0; i < gridSize[0]; i++) {
+        for (let j = 0; j < gridSize[1]; j++) {
             if (grid[i][j].isStart) start = grid[i][j];
             if (grid[i][j].isEnd) end = grid[i][j];
         }
@@ -152,7 +157,7 @@ function findStartEnd(grid) {
 async function dijkstraVisualization(grid) {
     const { start, end } = findStartEnd(grid);
     if (!start || !end) {
-        alert("Vui lòng chọn điểm bắt đầu và kết thúc trước khi chạy thuật toán!");
+        
         return [];
     }
 
@@ -191,7 +196,9 @@ async function dijkstraVisualization(grid) {
     await visualizeScanning(scannedNodes);
 
     if (end.distance === Infinity) {
-        alert("Không tìm thấy đường đi!");
+        annouce.textContent = "Không tìm thấy đường đi";
+        annouce.classList.add("blinking-border");  
+        arrows.forEach(arrow => arrow.style.display ="block");
         return [];
     }
 
@@ -213,33 +220,60 @@ async function visualizeScanning(nodes) {
         if (!element.classList.contains('start') && !element.classList.contains('end')) {
             element.classList.add('scanned'); // Thêm class để đổi màu
         }
-        await new Promise(resolve => setTimeout(resolve, 50)); // Delay mỗi ô 50ms
+        await new Promise(resolve => setTimeout(resolve, 10)); // Delay mỗi ô 50ms
     }
 }
 
 // Chạy thuật toán và hiển thị
 async function runDijkstra() {
     const path = await dijkstraVisualization(grid);
-    
-    document.querySelectorAll('.scanned').forEach(cell => {
-        cell.classList.remove('scanned');
-    });
-
     await visualizePath(path);
 }
 
 // Hiển thị animation đường đi
 async function visualizePath(path) {
     if (path.length === 0) {
-        alert("Không tìm được đường đi!");
+        annouce.textContent = "Không tìm thấy đường đi";
+        annouce.classList.add("blinking-border");
+        arrows.forEach(arrow => arrow.style.display ="block");
         return;
     }
 
+
+    annouce.textContent = "thấy đường đi";
+    annouce.classList.add("blinking-border");
+    arrows.forEach(arrow => arrow.style.display ="block");
     for (let cell of path) {
         const element = document.querySelector(`[data-x="${cell.x}"][data-y="${cell.y}"]`);
+        // Xóa class 'scanned' để màu đường đi đè lên
+        element.classList.remove('scanned');
         if (!element.classList.contains('start') && !element.classList.contains('end')) {
             element.classList.add('path');
         }
-        await new Promise(resolve => setTimeout(resolve, 100)); // Delay mỗi ô 100ms
+        await new Promise(resolve => setTimeout(resolve, 70)); // Delay 50ms cho mỗi ô
     }
 }
+
+
+
+
+// // Hàm thêm vật cản ngẫu nhiên với xác suất cho mỗi ô
+function addRandomObstacles(probability = 0.3) {
+    for (let i = 0; i < gridSize[0]; i++) {
+        for (let j = 0; j < gridSize[1]; j++) {
+            // Nếu ô đã được đặt làm điểm bắt đầu hoặc kết thúc thì bỏ qua
+            if (grid[i][j].isStart || grid[i][j].isEnd) continue;
+            // Với xác suất probability, đánh dấu ô là vật cản
+            if (Math.random() < probability) {
+                grid[i][j].isObstacle = true;
+                const cell = document.querySelector(`[data-x="${i}"][data-y="${j}"]`);
+                cell.classList.add('obstacle');
+            }
+        }
+    }
+}
+
+// Ví dụ: Thêm sự kiện cho nút "Random Obstacles" (thêm nút này vào HTML của bạn)
+document.getElementById('random-obstacles').addEventListener('click', () => {
+    addRandomObstacles(0.3);
+});

@@ -1,19 +1,70 @@
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
 body {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+p {
+    font-family: monospace;
+    font-size: 14px;
+}
+.container {
+    width: 100%;
 
+}
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: grey;
+    margin-bottom: 3rem;
+}
+    nav .Title-Web {
+        color: #ccc;
+        padding: 1rem;
+    }
+    nav .nav-information {
+        background-color: greenyellow;
+        padding: 1rem;
+    }
+
+.grid-container-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 #grid-container {
     position: relative;
     line-height: 0;
 }
-
+#operations {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+    .operation {
+        display: inline-block;
+        width: 200px;
+        height: 30px;
+        margin: 0rem 3rem;
+    
+    }
 #cirno {
+    display: flex;
     position: absolute;
-    top: 0;
+    flex-direction: column;
+    align-items: center;
     right: 10px;
+}
+#announce {
+    width: 150px;
 }
 
 .grid-cell {
@@ -44,3 +95,67 @@ body {
     background-color: lightblue; /* Màu xanh nhạt khi quét */
     transition: background-color 0.3s;
 }
+
+
+
+.information-student {
+    margin:1rem 0rem 1rem 0rem;
+
+}
+
+.blinking-border {
+    text-align: center;
+    width: 150px;
+    border-radius: 50%;
+    padding: 0.5rem;
+    border: 4px solid red;
+    animation: blink-border 1s infinite alternate;
+}
+
+@keyframes blink-border {
+    0% {
+        border-color: red;
+    }
+    100% {
+        border-color: transparent;
+    }
+}
+
+.arrow {
+    display: none;
+    position: absolute;
+    font-size: 24px;
+    color: red;
+    animation: arrow-blink 1s infinite alternate;
+}
+
+@keyframes arrow-blink {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.3;
+    }
+}
+
+/* Các mũi tên xung quanh */
+
+
+.arrow-middle {
+
+    left: 58%;
+    transform: translateX(-100%);
+    rotate: 0deg;
+}
+
+.arrow-right {
+
+    left: 60%;
+    transform:  rotate(340deg);
+}
+
+.arrow-left {
+    left: 40%;
+    transform: rotate(25deg);
+}
+
